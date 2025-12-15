@@ -29,22 +29,18 @@ ggg: out
 hhh: out"""
 
 
-def process_text(file):
-
+def process_text(file: str) -> dict:
     graph = defaultdict(list)
 
     for line in file.split("\n"):
         if line:
             node, connections = line.rstrip().split(":")
-            graph[node] = [
-                n for n in connections.strip().split(" ") if n != ""
-            ]
+            graph[node] = [n for n in connections.strip().split(" ") if n != ""]
 
     return graph
 
 
-def dfs(node, graph, n_routes):
-
+def dfs(node: str, graph: dict, n_routes: dict) -> int:
     if node in n_routes:
         return n_routes[node]
 
@@ -61,6 +57,32 @@ def dfs(node, graph, n_routes):
     return res
 
 
+def dfs_paths(start: str, graph: dict) -> int:
+    memory = {}
+
+    def dfs2(node: str, has_dac: bool, has_fft: bool) -> int:
+        key = (node, has_dac, has_fft)
+
+        if key in memory:
+            return memory[key]
+
+        if node == "out":
+            return 1 if has_dac and has_fft else 0
+
+        has_dac = has_dac or node == "dac"
+        has_fft = has_fft or node == "fft"
+
+        res = 0
+        for child in graph[node]:
+            res += dfs2(child, has_dac, has_fft)
+
+        memory[key] = res
+
+        return res
+
+    return dfs2(start, False, False)
+
+
 #################### TASK 1 ####################
 
 with open(file_path, "r") as file:
@@ -71,25 +93,6 @@ n_routes = defaultdict(int)
 print(dfs("you", graph, n_routes))
 
 #################### TASK 2 ####################
-
-
-def dfs_paths(start, graph):
-
-    def dfs2(node, path):
-        if node == "out":
-            if "dac" in path and "fft" in path:
-                return 1
-
-        res = 0
-        for child in graph[node]:
-            res += dfs2(child, path + [child])
-
-        return res
-
-    res = dfs2(start, [start])
-
-    return res
-
 
 with open(file_path, "r") as file:
     # graph = process_text(ex2)

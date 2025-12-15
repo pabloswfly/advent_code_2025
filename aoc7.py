@@ -18,12 +18,11 @@ ex = """.......S.......
 ..............."""
 
 
-def lookup(c, s):
+def lookup(c: chr, s: str) -> list:
     return [i for i, char in enumerate(s) if char == c]
 
 
-def process_beams(file):
-
+def process_beams(file: str) -> tuple:
     first = file.split("\n")[0]
     beams = lookup("S", first)
     orig = beams[0]
@@ -45,8 +44,7 @@ def process_beams(file):
     return active_splits, line_len, orig
 
 
-def walk_levels(pos, level, active_splits, origin):
-
+def walk_levels(pos: int, level: int, active_splits: list, origin: list) -> int:
     level_splits = [s for s in active_splits if s[0] == level]
 
     res = 0
@@ -74,28 +72,6 @@ print(n_splits)
 
 
 #################### TASK 2 ####################
-
-"""
-with open(file_path, "r") as file:
-    # n_timelines = process_timelines(file.read())
-    active_splits = process_beams(ex)
-
-origin = [s for s in active_splits if s[0] == 0][0]
-max_depth = max(s[0] for s in active_splits)
-ends = [s for s in active_splits if s[0] == max_depth]
-
-starting_pos = []
-for e in ends:
-    starting_pos.append(e[1] - 1)
-    starting_pos.append(e[1] + 1)
-
-starting_pos = sorted(list(set(starting_pos)))
-res = 0
-for pos in starting_pos:
-    res += walk_levels(pos, max_depth, active_splits, origin)
-"""
-
-############ TASK 2 WITHOUT RECURSION ############
 
 with open(file_path, "r") as file:
     active_splits, line_len, orig = process_beams(file.read())

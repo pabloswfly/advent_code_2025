@@ -21,8 +21,8 @@ with open(file_path, "r") as file:
     nums = [int(o[1:]) for o in ops]
 
 pos = 50
-res = 0
 sign = {"L": -1, "R": 1}
+res = 0
 
 for d, n in zip(direc, nums):
     pos = (pos + n * sign[d]) % 100
@@ -38,7 +38,6 @@ pos = 50
 res = 0
 
 for d, n in zip(direc, nums):
-
     prev = pos
     pos = pos + n * sign[d]
 

@@ -13,14 +13,12 @@ ex = """3-5
 32"""
 
 
-def process_text(file):
-
+def process_text(file: str) -> tuple:
     mode_ranges = True
     ranges = []
     ids = []
 
     for line in file.split("\n"):
-
         if line in ["", " "]:
             mode_ranges = False
             continue
@@ -35,7 +33,7 @@ def process_text(file):
     return ranges, ids
 
 
-def find_overlaps(ranges):
+def find_overlaps(ranges: list) -> list:
     merged = []
     for r in sorted(ranges):
         if not merged or merged[-1][1] < r[0] - 1:
@@ -51,20 +49,11 @@ with open(file_path, "r") as file:
 
 #################### TASK 1 ####################
 
-res = 0
-for i in ids:
-    for a, b in ranges:
-        if a <= i <= b:
-            res += 1
-            break
-
+res = sum(any(a <= i <= b for a, b in ranges) for i in ids)
 print(res)
 
 #################### TASK 2 ####################
 
-res = 0
 merged = find_overlaps(ranges)
-for a, b in merged:
-    res += b - a + 1
-
+res = sum([b - a + 1 for a, b in merged])
 print(res)

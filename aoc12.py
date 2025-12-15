@@ -40,8 +40,7 @@ ex = """0:
 from math import prod
 
 
-def process_text(file):
-
+def process_text(file: str) -> tuple[list[int], list[list[int]]]:
     areas = []
     presents = []
 

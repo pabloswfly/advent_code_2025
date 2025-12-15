@@ -11,12 +11,10 @@ ex = """[.##.] (3) (1,3) (2) (2,3) (0,2) (0,1) {3,5,4,7}
 [.###.#] (0,1,2,3,4) (0,3,4) (0,1,2,4,5) (1,2) {10,11,11,5,10,5}"""
 
 
-def process_text(file):
-
+def process_text(file: str) -> list:
     machines = []
 
     for line in file.split("\n"):
-
         splitted = line.rstrip().split(" ")
 
         diagram = splitted[0][1:-1]
@@ -35,20 +33,19 @@ def process_text(file):
     return machines
 
 
-def on_indeces(diagram):
+def on_indeces(diagram: list) -> list:
     return [i for i, ch in enumerate(diagram) if ch == 1]
 
 
-def switch(diagram, index):
+def switch(diagram: list, index: int) -> None:
     diagram[index] = 1 - diagram[index]
 
 
-def add(diagram, index):
+def add(diagram: list, index: int) -> None:
     diagram[index] += 1
 
 
-def simulate(diagram, buttons, n=100):
-
+def simulate(diagram: list, buttons: list, n=100) -> int:
     min_n = 1000
 
     for _ in range(n):
@@ -65,8 +62,7 @@ def simulate(diagram, buttons, n=100):
     return min_n
 
 
-def solve_joltage(buttons, joltage):
-
+def solve_joltage(buttons: list, joltage: list) -> int:
     opt = Optimize()
 
     # Each button press is an integer with positive values

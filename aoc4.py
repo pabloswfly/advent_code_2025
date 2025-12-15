@@ -16,7 +16,7 @@ ex = """..@@.@@@@.
 @.@.@@@.@."""
 
 
-def process_text(file):
+def process_text(file: str) -> np.ndarray:
     mat = np.array([list(line) for line in file.split("\n")[:-1]])
     mat = np.pad(mat, pad_width=1, mode="constant", constant_values=".")
     return mat
@@ -49,7 +49,6 @@ res = 0
 prev_res = -1
 
 while res != prev_res:
-
     prev_res = res
 
     for i in range(1, mat.shape[0] - 1):

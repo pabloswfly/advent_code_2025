@@ -1,4 +1,5 @@
 file_path = "data/aoc3.txt"
+
 ex = """987654321111111
 811111111111119
 234234234234278
@@ -6,14 +7,13 @@ ex = """987654321111111
 
 with open(file_path, "r") as file:
     banks = [line for line in file.read().rstrip().split("\n")]
-# banks = [line for line in ex.strip().split("\n")]
+    # banks = [line for line in ex.strip().split("\n")]
 
 #################### TASK 1 ####################
 
 res = 0
 
 for bank in banks:
-
     high = 0
 
     for i in range(len(bank) - 1):
@@ -31,11 +31,9 @@ print(res)
 count = 0
 
 for bank in banks:
-
     num = [0]
 
     for i in range(len(bank)):
-
         digit = int(bank[i])
         insert = True
 

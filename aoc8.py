@@ -1,4 +1,6 @@
 from collections import Counter
+from math import prod
+
 
 file_path = "data/aoc8.txt"
 
@@ -24,12 +26,10 @@ ex = """162,817,812
 425,690,689"""
 
 
-def process_text(file):
-
+def process_text(file: str) -> list:
     nums = []
 
     for line in file.split("\n"):
-
         num = line.rstrip().split(",")
         num = [int(n) for n in num if n != ""]
         nums.append(num)
@@ -37,15 +37,15 @@ def process_text(file):
     return nums
 
 
-def distance(a, b):
+def distance(a: list, b: list) -> float:
     return sum((x - y) ** 2 for x, y in zip(a, b)) ** 0.5
 
 
-def coor2str(a):
+def coor2str(a: list) -> str:
     return ",".join([str(x) for x in a])
 
 
-def str2coor(s):
+def str2coor(s: str) -> list:
     return [int(x) for x in s.split(",")]
 
 
@@ -91,10 +91,7 @@ count = Counter(lengths)
 # get the sizes of the three largest networks from the counter
 largest = sorted(count.keys(), reverse=True)[:3]
 
-res = 1
-for l in largest:
-    res *= l
-
+res = prod(largest)
 print(res)
 
 
@@ -104,7 +101,6 @@ networks = [[coor2str(n)] for n in nums]
 
 sorted_dic = sorted(dist2boxes.keys())
 for dist in sorted_dic:
-
     a, b = dist2boxes[dist]
 
     for net in networks:
@@ -114,6 +110,7 @@ for dist in sorted_dic:
                     net.extend(other)
                     networks.remove(other)
                     break
+
         elif b in net and a not in net:
             for other in networks:
                 if net != other and a in other:

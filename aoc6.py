@@ -1,3 +1,5 @@
+from math import prod
+
 file_path = "data/aoc6.txt"
 
 ex = """123 328  51 64 
@@ -6,12 +8,10 @@ ex = """123 328  51 64
 *   +   *   +  """
 
 
-def process_text_part1(file):
-
+def process_text_part1(file: str) -> list:
     problems = []
 
     for line in file.split("\n"):
-
         vals = line.rstrip().split(" ")
         vals = [v for v in vals if v != ""]
         problems.append(vals)
@@ -24,8 +24,7 @@ def process_text_part1(file):
     return problems
 
 
-def process_text_part2(file):
-
+def process_text_part2(file: str) -> tuple:
     problems = []
 
     # Parse the values from each line
@@ -67,21 +66,13 @@ def process_text_part2(file):
     return nums, ops
 
 
-def product(a):
-    res = 1
-    for n in a:
-        res *= n
-    return res
-
-
-def apply_operation(nums, op):
-
+def apply_op(nums: list, op: str) -> int:
     nums = [int(n) for n in nums]
 
     if op == "+":
         return sum(nums)
     elif op == "*":
-        return product(nums)
+        return prod(nums)
 
 
 #################### TASK 1 ####################
@@ -90,9 +81,7 @@ with open(file_path, "r") as file:
     problems = process_text_part1(file.read())
     # problems = process_text_part1(ex)
 
-res = 0
-for prob in problems:
-    res += apply_operation(prob[:-1], prob[-1])
+res = sum([apply_op(p[:-1], p[-1]) for p in problems])
 print(res)
 
 #################### TASK 2 ####################
@@ -101,7 +90,5 @@ with open(file_path, "r") as file:
     # nums, ops = process_text_part2(ex)
     nums, ops = process_text_part2(file.read())
 
-res = 0
-for num, op in zip(nums, ops):
-    res += apply_operation(num, op)
+res = sum([apply_op(num, op) for num, op in zip(nums, ops)])
 print(res)

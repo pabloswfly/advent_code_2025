@@ -15,11 +15,9 @@ ex = """7,1
 
 
 def process_text(file):
-
     reds = []
 
     for line in file.split("\n"):
-
         coor = line.rstrip().split(",")
         coor = [int(n) for n in coor if n != ""]
         if coor:
